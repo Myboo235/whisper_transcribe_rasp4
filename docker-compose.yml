@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    volumes:
+      - .:/app
+      - /tmp/.X11-unix:/tmp/.X11-unix  # if use X11
+      - $XDG_RUNTIME_DIR/pulse:/run/pulse  # share PulseAudio socket (pyaudio)
+      - ~/.config/pulse/cookie:/root/.config/pulse/cookie:ro  # auth cookie (optional)
+    environment:
+      - PULSE_SERVER=unix:/run/pulse/native
+    devices:
+      - "/dev/snd:/dev/snd"   # microphone access (soundevice)
+    tty: true
+    stdin_open: true
