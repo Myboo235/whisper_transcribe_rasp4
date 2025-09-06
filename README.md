@@ -1,6 +1,6 @@
-## 🎙️ Real-Time Speech Transcription with Whisper
+## 🎙️ Real-Time Speech Transcription with Vosk
 
-This project provides a real-time speech-to-text demo using [OpenAI Whisper](https://github.com/openai/whisper) with microphone input.
+This project provides a real-time speech-to-text demo using [Vosk](https://alphacephei.com/vosk/) with microphone input.
 You can run it **with Docker** or **without Docker** depending on your setup.
 
 ---
@@ -31,7 +31,7 @@ docker compose build
 ### 2. Start transcription
 
 ```bash
-docker compose run --rm app python transcribe_demo.py
+docker compose run --rm app python transcribe.py
 ```
 
 ---
@@ -40,7 +40,7 @@ docker compose run --rm app python transcribe_demo.py
 
 ### 1. Create a virtual environment (recommended)
 
-```bash
+```python
 python -m venv venv
 source venv/bin/activate   # On Linux/Mac
 venv\Scripts\activate      # On Windows
@@ -49,6 +49,14 @@ venv\Scripts\activate      # On Windows
 ### 2. Install dependencies
 
 ```bash
+apt-get update && apt-get install -y \
+    git libportaudio2 libportaudiocpp0 portaudio19-dev \
+    pulseaudio alsa-utils ffmpeg \
+    python3-dev build-essential \
+    && rm -rf /var/lib/apt/lists/*
+```
+
+```python
 pip install -r requirements.txt
 ```
 
@@ -60,22 +68,7 @@ python transcribe.py
 
 ---
 
-## ⚙️ Configuration
-
-All configuration is done inside [`transcribe_demo.py`](./transcribe_demo.py).
-Edit the variables at the top of the file to adjust behavior:
-
-```python
-MODEL = "base"                # Options: "tiny", "base", "small", "medium", "large"
-NON_ENGLISH = False           # True = multilingual model, False = english-only
-ENERGY_THRESHOLD = 1000       # Mic sensitivity
-RECORD_TIMEOUT = 2            # Seconds between audio processing
-PHRASE_TIMEOUT = 3            # Silence gap before new line
-DEFAULT_MICROPHONE = "pulse"  # Linux only; set to "list" to show available devices
-```
-
----
-
 ## 📝 REF
 
-- [Real Time Whisper Transcription](https://github.com/davabase/whisper_real_time)
+- [VOSK](https://alphacephei.com/vosk/)
+- https://github.com/alphacep/vosk-api/blob/master/python/example/test_microphone.py
